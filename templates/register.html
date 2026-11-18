@@ -1,0 +1,196 @@
+
+{% extends "base.html" %}
+
+{% block title %}Event Registration | CampusConnect{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <p class="eyebrow">CAMPUSCONNECT</p>
+    <h1>{{ event_title }}</h1>
+    <p>Choose your event and complete your registration.</p>
+</section>
+
+<section class="form-card">
+
+    <form method="POST">
+
+        <h2>Choose Participation Type</h2>
+
+        <div class="registration-type">
+
+            <label>
+                <input type="radio"
+                       name="participation_type"
+                       value="individual"
+                       checked
+                       onchange="updateRegistrationForm()">
+                Individual
+            </label>
+
+            <label>
+                <input type="radio"
+                       name="participation_type"
+                       value="team"
+                       onchange="updateRegistrationForm()">
+                Team / Group
+            </label>
+
+        </div>
+
+        <label for="selected_event">Select Your Event</label>
+
+        <select name="selected_event" id="selected_event" required>
+
+            <option value="">-- Select Event --</option>
+
+            <optgroup label="Individual Events" id="individual-group">
+                {% for item in individual_events %}
+                <option value="{{ item }}">{{ item }}</option>
+                {% endfor %}
+            </optgroup>
+
+            <optgroup label="Team / Group Events" id="team-group" hidden>
+                {% for item in team_events %}
+                <option value="{{ item }}">{{ item }}</option>
+                {% endfor %}
+            </optgroup>
+
+        </select>
+
+        <hr>
+
+        <h2>Student Details</h2>
+
+        <label for="student_name">
+            Student Name / Team Captain Name
+        </label>
+
+        <input type="text"
+               id="student_name"
+               name="student_name"
+               required>
+
+        <label for="usn">USN</label>
+
+        <input type="text"
+               id="usn"
+               name="usn"
+               required>
+
+        <label for="branch">Branch</label>
+
+        <select id="branch" name="branch" required>
+            <option value="">-- Select Branch --</option>
+
+            {% for branch in branches %}
+            <option value="{{ branch }}">{{ branch }}</option>
+            {% endfor %}
+
+        </select>
+
+        <label for="semester">Semester</label>
+
+        <select id="semester" name="semester" required>
+            <option value="">-- Select Semester --</option>
+
+            {% for sem in range(1, 9) %}
+            <option value="{{ sem }}">{{ sem }}</option>
+            {% endfor %}
+
+        </select>
+
+        <label for="phone">Phone Number</label>
+
+        <input type="tel"
+               id="phone"
+               name="phone"
+               maxlength="10"
+               pattern="[0-9]{10}"
+               placeholder="Enter 10 digit phone number"
+               required>
+
+        <div id="team-fields" hidden>
+
+            <hr>
+
+            <h2>Team Details</h2>
+
+            <label for="team_name">Team Name</label>
+
+            <input type="text"
+                   id="team_name"
+                   name="team_name">
+
+            <label for="team_members">Other Team Members</label>
+
+            <textarea id="team_members"
+                      name="team_members"
+                      rows="8"
+                      placeholder="Enter each member on a separate line:
+
+Name - USN - Branch - Semester
+Name - USN - Branch - Semester"></textarea>
+
+            <p class="form-help">
+                Enter all team members except the captain.
+                The captain's details are already provided above.
+            </p>
+
+        </div>
+
+        <button type="submit" class="btn-primary">
+            Submit Registration
+        </button>
+
+    </form>
+
+</section>
+
+<script>
+function updateRegistrationForm() {
+
+    const selectedType = document.querySelector(
+        'input[name="participation_type"]:checked'
+    ).value;
+
+    const individualGroup = document.getElementById("individual-group");
+    const teamGroup = document.getElementById("team-group");
+    const teamFields = document.getElementById("team-fields");
+
+    const teamName = document.getElementById("team_name");
+    const teamMembers = document.getElementById("team_members");
+
+    const select = document.getElementById("selected_event");
+
+    // Clear the selected event when switching type
+    select.value = "";
+
+    if (selectedType === "team") {
+
+        individualGroup.hidden = true;
+        teamGroup.hidden = false;
+
+        teamFields.hidden = false;
+
+        teamName.required = true;
+        teamMembers.required = true;
+
+    } else {
+
+        individualGroup.hidden = false;
+        teamGroup.hidden = true;
+
+        teamFields.hidden = true;
+
+        teamName.required = false;
+        teamMembers.required = false;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    updateRegistrationForm();
+});
+</script>
+
+{% endblock %}

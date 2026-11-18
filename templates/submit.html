@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Submit Information | CampusConnect{% endblock %}
+{% block content %}
+<section class="page-header"><p class="eyebrow">CONTRIBUTE TO CAMPUSCONNECT</p><h1>Submit an Event or Announcement</h1><p>Student submissions are reviewed by an admin before they appear publicly.</p></section>
+<form class="form-card" method="POST">
+  <label>Your name <span>*</span><input type="text" name="created_by" required placeholder="Enter your name"></label>
+  <label>Title <span>*</span><input type="text" name="title" required placeholder="Enter a clear title"></label>
+  <label>Category <span>*</span><select name="category" id="category" required><option value="">Choose category</option><option value="Event">College Event</option><option value="Announcement">Announcement</option></select></label>
+  <label>Description <span>*</span><textarea name="description" rows="5" required placeholder="Provide useful details..."></textarea></label>
+  <div class="form-row">
+    <label>Event date (if applicable)<input type="date" name="event_date"></label>
+    <label>Venue (if applicable)<input type="text" name="venue" placeholder="College auditorium"></label>
+  </div>
+  <button class="btn" type="submit">Submit for Approval</button>
+</form>
+{% endblock %}

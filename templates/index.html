@@ -1,0 +1,363 @@
+
+{% extends "base.html" %}
+
+{% block title %}Home | CampusConnect{% endblock %}
+
+{% block content %}
+
+<!-- =====================================
+     COLLEGE WELCOME BANNER
+===================================== -->
+
+<section class="home-hero">
+
+    <div class="home-hero-content">
+
+        <p class="home-hero-label">
+            RAJEEV INSTITUTE OF TECHNOLOGY • HASSAN
+        </p>
+
+        <h1>
+            Welcome to <span>CampusConnect</span>
+        </h1>
+
+        <p>
+            Your campus, your opportunities, your future.
+            Discover college events, placement resources
+            and the latest campus announcements in one place.
+        </p>
+
+        <div class="home-hero-buttons">
+
+            <a href="{{ url_for('events') }}"
+               class="home-btn-primary">
+                Explore Events
+            </a>
+
+            <a href="{{ url_for('placements') }}"
+               class="home-btn-secondary">
+                Placement Preparation
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     GROW YOUR SKILLS
+===================================== -->
+
+<section class="skills-section">
+
+    <div class="section-heading">
+
+        <div>
+            <p class="eyebrow">GROW YOUR SKILLS</p>
+            <h2>Placement Preparation</h2>
+        </div>
+
+        <a href="{{ url_for('placements') }}" class="view-all">
+            View all →
+        </a>
+
+    </div>
+
+    <div class="skills-grid">
+
+        <!-- APTITUDE -->
+
+        <article class="skill-card aptitude-bg">
+
+            <div class="skill-card-content">
+
+                <div class="skill-icon">🧠</div>
+
+                <h3>Aptitude</h3>
+
+                <p>
+                    Practice quantitative aptitude, logical
+                    reasoning and verbal ability.
+                </p>
+
+                <a href="{{ url_for('placements') }}">
+                    Start learning →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- TECHNICAL SKILLS -->
+
+        <article class="skill-card technical-bg">
+
+            <div class="skill-card-content">
+
+                <div class="skill-icon">💻</div>
+
+                <h3>Technical Skills</h3>
+
+                <p>
+                    Revise programming, data structures,
+                    databases and core subjects.
+                </p>
+
+                <a href="{{ url_for('placements') }}">
+                    Explore topics →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- INTERVIEW SKILLS -->
+
+        <article class="skill-card interview-bg">
+
+            <div class="skill-card-content">
+
+                <div class="skill-icon">🤝</div>
+
+                <h3>Interview Skills</h3>
+
+                <p>
+                    Prepare for HR rounds, technical interviews
+                    and resume discussions.
+                </p>
+
+                <a href="{{ url_for('placements') }}">
+                    Get prepared →
+                </a>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     UPCOMING COLLEGE EVENTS
+===================================== -->
+
+<section class="upcoming-events-section">
+
+    <div class="section-heading">
+
+        <div>
+            <p class="eyebrow">WHAT'S HAPPENING</p>
+            <h2>Upcoming College Events</h2>
+        </div>
+
+        <a href="{{ url_for('events') }}" class="view-all">
+            All events →
+        </a>
+
+    </div>
+
+
+    <div class="home-events-grid">
+
+        {% for event in events %}
+
+        <article class="home-event-card">
+
+            <!-- EVENT PHOTOGRAPH -->
+
+            <div class="home-event-image">
+
+                {% if event.photo_filename %}
+
+                    <img
+                        src="{{ url_for('static', filename='uploads/' + event.photo_filename) }}"
+                        alt="{{ event.title }}">
+
+                {% elif 'Sports' in event.title %}
+
+                    <img
+                        src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1000&q=85"
+                        alt="Sports competition">
+
+                {% elif 'Hackathon' in event.title %}
+
+                    <img
+                        src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1000&q=85"
+                        alt="Technology hackathon">
+
+                {% elif 'UTSAV' in event.title %}
+
+                    <img
+                        src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1000&q=85"
+                        alt="College cultural festival">
+
+                {% else %}
+
+                    <img
+                        src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1000&q=85"
+                        alt="College event">
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- EVENT INFORMATION -->
+
+            <div class="home-event-content">
+
+                <div class="event-labels">
+
+                    <span class="home-event-tag">
+                        {{ event.category }}
+                    </span>
+
+                    {% if event.is_demo %}
+                        <span class="home-demo-tag">
+                            Sample Event
+                        </span>
+                    {% endif %}
+
+                </div>
+
+                <h3>{{ event.title }}</h3>
+
+                <p class="home-event-description">
+                    {{ event.description }}
+                </p>
+
+                <div class="home-event-info">
+
+                    {% if event.event_date %}
+                        <p>📅 {{ event.event_date }}</p>
+                    {% endif %}
+
+                    {% if event.venue %}
+                        <p>📍 {{ event.venue }}</p>
+                    {% endif %}
+
+                    {% if event.branch %}
+                        <p>🏫 {{ event.branch }}</p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </article>
+
+        {% else %}
+
+        <div class="home-no-events">
+            <span>📅</span>
+            <h3>No Upcoming Events</h3>
+            <p>Check back later for new college events.</p>
+
+            <a href="{{ url_for('events') }}">
+                View Events →
+            </a>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     LATEST ANNOUNCEMENTS
+===================================== -->
+
+<section class="home-announcements">
+
+    <div class="section-heading">
+
+        <div>
+            <p class="eyebrow">STAY UPDATED</p>
+            <h2>Latest Announcements</h2>
+        </div>
+
+        <a href="{{ url_for('announcements') }}" class="view-all">
+            View all →
+        </a>
+
+    </div>
+
+
+    <div class="home-announcement-grid">
+
+        {% for announcement in announcements %}
+
+        <article class="home-announcement-card">
+
+            <span class="home-event-tag">
+                {{ announcement.category }}
+            </span>
+
+            <h3>{{ announcement.title }}</h3>
+
+            <p>{{ announcement.description }}</p>
+
+            {% if announcement.photo_filename %}
+
+                <img
+                    class="home-announcement-image"
+                    src="{{ url_for('static', filename='uploads/' + announcement.photo_filename) }}"
+                    alt="{{ announcement.title }}">
+
+            {% endif %}
+
+            <small>
+                Posted by {{ announcement.created_by }}
+            </small>
+
+            {% if announcement.branch %}
+                <p class="announcement-branch">
+                    🏫 {{ announcement.branch }}
+                </p>
+            {% endif %}
+
+        </article>
+
+        {% else %}
+
+        <div class="home-no-events">
+            <span>📢</span>
+            <h3>No Announcements Yet</h3>
+            <p>New college announcements will appear here.</p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     BOTTOM CAMPUSCONNECT BANNER
+===================================== -->
+
+<section class="home-bottom-banner">
+
+    <h2>Stay Connected with Your Campus!</h2>
+
+    <p>
+        Explore opportunities, participate in events
+        and stay updated with CampusConnect.
+    </p>
+
+    <a href="{{ url_for('submit') }}">
+        Submit Information →
+    </a>
+
+</section>
+
+{% endblock %}

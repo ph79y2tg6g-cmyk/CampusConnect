@@ -1,0 +1,71 @@
+
+{% extends "base.html" %}
+
+{% block title %}Event Registrations | CampusConnect{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <p class="eyebrow">ADMIN DASHBOARD</p>
+    <h1>Event Registrations</h1>
+    <p>View all sports and cultural event registrations.</p>
+</section>
+
+<section class="form-card">
+
+    <h2>Total Registrations: {{ registrations|length }}</h2>
+
+    {% if registrations %}
+
+        {% for item in registrations %}
+
+        <div class="registration-card">
+
+            <h2>{{ item["selected_event"] }}</h2>
+
+            <p>
+                <strong>Festival:</strong>
+                {{ "Sports Meet" if item["event_type"] == "sports" else "RIT UTSAV" }}
+            </p>
+
+            <p>
+                <strong>Participation:</strong>
+                {{ item["participation_type"]|title }}
+            </p>
+
+            <p><strong>Student / Captain:</strong> {{ item["student_name"] }}</p>
+            <p><strong>USN:</strong> {{ item["usn"] }}</p>
+            <p><strong>Branch:</strong> {{ item["branch"] }}</p>
+            <p><strong>Semester:</strong> {{ item["semester"] }}</p>
+            <p><strong>Phone:</strong> {{ item["phone"] }}</p>
+
+            {% if item["participation_type"] == "team" %}
+                <p><strong>Team Name:</strong> {{ item["team_name"] }}</p>
+                <p><strong>Team Members:</strong></p>
+                <pre>{{ item["team_members"] }}</pre>
+            {% endif %}
+
+            <p>
+                <strong>Registration Date:</strong>
+                {{ item["registered_at"] }}
+            </p>
+
+        </div>
+
+        <hr>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No registrations have been received yet.</p>
+
+    {% endif %}
+
+    <a href="{{ url_for('admin') }}" class="btn-primary">
+        Back to Admin Dashboard
+    </a>
+
+</section>
+
+{% endblock %}

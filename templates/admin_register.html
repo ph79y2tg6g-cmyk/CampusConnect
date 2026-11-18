@@ -1,0 +1,62 @@
+
+{% extends "base.html" %}
+
+{% block title %}Admin Registration | CampusConnect{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <p class="eyebrow">AUTHORIZED REGISTRATION</p>
+    <h1>Register as Admin</h1>
+    <p>Create an administrator account for CampusConnect.</p>
+</section>
+
+<form class="form-card narrow" method="POST">
+
+    <label>
+        Username
+        <input type="text"
+               name="username"
+               minlength="3"
+               required
+               placeholder="Choose a username">
+    </label>
+
+    <label>
+        Password
+        <input type="password"
+               name="password"
+               minlength="8"
+               required
+               placeholder="Minimum 8 characters">
+    </label>
+
+    <label>
+        Confirm Password
+        <input type="password"
+               name="confirm_password"
+               minlength="8"
+               required
+               placeholder="Enter password again">
+    </label>
+
+    <label>
+        Secret Registration Code
+        <input type="password"
+               name="registration_code"
+               required
+               placeholder="Enter admin registration code">
+    </label>
+
+    <button class="btn" type="submit">
+        Create Admin Account
+    </button>
+
+    <p class="muted">
+        Already registered?
+        <a href="{{ url_for('admin') }}">Login here</a>
+    </p>
+
+</form>
+
+{% endblock %}
